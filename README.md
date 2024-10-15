@@ -1,5 +1,6 @@
 # master-dobrih-del
 master-dobrih-del homeworks
+ДЗ 2. Git pre-commit job
 
 Inside the repository, there are two important files: `commit-msg` and `pre-commit`.
 
