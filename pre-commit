@@ -1,0 +1,24 @@
+#!/bin/bash
+FLAKE_BIN=$(which flake8)
+if [[ -z $FLAKE_BIN ]];
+then
+  echo "flake8 bin not found";
+  exit
+fi
+
+files=$(git diff --cached --name-only --diff-filter=ACM | grep '\.py$')
+if [ -z "$files" ]; then
+  echo "no .py-files in commit"
+  exit 0
+fi
+
+echo "run flake8"
+for file in $files; do
+  FLAKE_BIN "$file"
+  if [ $? -ne 0 ]; then
+    echo "errors in: $file"
+    exit 1
+  fi
+done
+
+exit 0
