@@ -1,10 +1,19 @@
 # master-dobrih-del
 master-dobrih-del homeworks
 
-Inside repo two important files 'commit-msg' and 'pre-commit'
-commit-msg - can be use for cheking commit messeges with regexp
-pre-commit - can be use for linting *.py files in commit
-How to use:
- - copy files to .git/hooks ```cp pre-commit .git/hooks/ && cp commit-msg} .git/hooks/```
- - make scripts executable: ```chmod +x .git/hooks/{pre-commit,commit-msg}```
- - try to make commits
+Inside the repository, there are two important files: `commit-msg` and `pre-commit`.
+
+- `commit-msg`: Used for checking commit messages with regular expressions.
+- `pre-commit`: Used for linting `*.py` files in commits.
+
+## How to use:
+
+1. Copy the files to `.git/hooks`:
+   ```sh
+   cp pre-commit .git/hooks/ && cp commit-msg .git/hooks/ 
+   ```
+2. Make the scripts executable:
+    ```sh
+    chmod +x .git/hooks/{pre-commit,commit-msg}
+    ```
+3. Try to make commits.
