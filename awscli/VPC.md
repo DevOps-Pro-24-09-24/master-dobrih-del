@@ -27,6 +27,9 @@ $VPC_ID
 ```sh
 aws configure
 ```
+<image src="screenshots/aws-config.png" alt="Текст с описанием картинки">
+<image src="./screenshots/aws-iam-list-keys.png" alt="Текст с описанием картинки2222">
+
 <details>
 ![Example aws config](./screenshots/aws-config.png)
 </details>
