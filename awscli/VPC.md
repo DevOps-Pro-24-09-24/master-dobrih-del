@@ -28,10 +28,10 @@ $VPC_ID
 aws configure
 ```
 <details>
-![Example](./screenshots/aws-config.png)
+![Example aws config](/screenshots/aws-config.png)
 </details>
 <details>
-![Example](./screenshots/aws-iam-list-keys.png)
+![Example aws key list](/screenshots/aws-iam-list-keys.png)
 </details>
 
 ## 1. Створити VPC з двома підмережами
