@@ -28,6 +28,7 @@ $VPC_ID
 aws configure
 ```
 <details>
+  <summary>screenshots</summary>
 <image src="screenshots/aws-config.png" alt="Example aws config">
 <image src="./screenshots/aws-iam-list-keys.png" alt="Example aws key list">
 </details>
