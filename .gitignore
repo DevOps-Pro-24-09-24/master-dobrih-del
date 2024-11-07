@@ -16,3 +16,4 @@ crash.log
 **terraform.rc
 **terraform.plan
 **tfplan
+**lock.hcl
