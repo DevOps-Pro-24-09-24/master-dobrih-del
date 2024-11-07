@@ -35,7 +35,8 @@ terraform plan
 terraform apply
 ```
 ## Proofs
-<details>
-  <summary>screenshots</summary>
-<image src="screenshots/result.png" alt="curl -I">
-</details>
+<!-- <details>
+  <summary>screenshots</summary> -->
+<image src="screenshots/result-teraform-apply.png" alt="teraform apply">
+<image src="screenshots/result-aws-ec2-describe-instances.png" alt="describe instances">
+<!-- </details> -->
