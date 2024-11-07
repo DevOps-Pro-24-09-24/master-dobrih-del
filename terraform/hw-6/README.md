@@ -34,11 +34,8 @@ terraform plan
 ```sh
 terraform apply
 ```
-### Confirm the apply with yes.
-
-## How to Verify
-### After applying the configuration, you can verify the created resources in the AWS Management Console:
-###     VPC: Check the VPC and subnets.
-###     Security Groups: Verify the security group rules.
-###     EC2 Instances: Verify the instances and their IP addresses.
-###     You can also check the output variables in the terminal to see the IDs and IP addresses of the created resources. 
+## Proofs
+<details>
+  <summary>screenshots</summary>
+<image src="screenshots/result.png" alt="curl -I">
+</details>
