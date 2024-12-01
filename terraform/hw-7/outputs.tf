@@ -13,3 +13,6 @@ output "web_instance_dns" {
 output "rds_endpoint" {
   value = aws_db_instance.default.endpoint
 }
+output "public_url" {
+  value = "https://${aws_instance.web.public_ip}.sslip.io"
+}
