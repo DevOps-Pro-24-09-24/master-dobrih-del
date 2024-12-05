@@ -12,29 +12,6 @@ source $VENV_DIR/bin/activate
 sudo chown admin:admin -R $VENV_DIR $APP_DIR
 pip install -r requirements.txt
 
-sudo cat <<EOF > fetch-ssm-params.sh
-#!/bin/bash
-
-# Отримання параметрів з AWS SSM
-FLASK_CONFIG=$(aws ssm get-parameter --name "/hw5/FLASK_CONFIG" --query "Parameter.Value" --output text)
-MYSQL_USER=$(aws ssm get-parameter --name "/hw5/MYSQL_USER" --query "Parameter.Value" --output text)
-MYSQL_PASSWORD=$(aws ssm get-parameter --name "/hw5/MYSQL_PASSWORD" --query "Parameter.Value" --with-decryption --output text)
-MYSQL_DB=$(aws ssm get-parameter --name "/hw5/MYSQL_DB" --query "Parameter.Value" --output text)
-MYSQL_HOST=$(aws ssm get-parameter --name "/hw5/MYSQL_HOST" --query "Parameter.Value" --output text)
-APP_DIR=$(aws ssm get-parameter --name "/hw5/APP_DIR" --query "Parameter.Value" --output text)
-VENV_DIR=$(aws ssm get-parameter --name "/hw5/VENV_DIR" --query "Parameter.Value" --output text)
- 
-# Створення файлу зі змінними середовища
-cat <<EOF > /etc/myapp.env
-FLASK_CONFIG=$FLASK_CONFIG
-MYSQL_USER=$MYSQL_USER
-MYSQL_PASSWORD=$MYSQL_PASSWORD
-MYSQL_DB=$MYSQL_DB
-MYSQL_HOST=$MYSQL_HOST
-EOF
-sudo mv fetch-ssm-params.sh /usr/local/bin/fetch-ssm-params.sh
-chmod +x /usr/local/bin/fetch-ssm-params.sh
-
 sudo cat <<EOF > gunicorn.service
 [Unit]
 Description=Gunicorn instance to serve application
