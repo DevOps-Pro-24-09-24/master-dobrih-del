@@ -6,8 +6,9 @@ s3_bucket=$(aws ssm get-parameter --name "/hw5/BACKUP_BUCKET" --query "Parameter
 # ищем mysqldump, если нет, то устанавливаем
 binpath=$(which mysqldump)
 [ -f "$binpath" ] || (sudo apt update &&  sudo apt install -y mariadb-client) && echo "$binpath exist"
+
 # Создание бэкапа базы данных
-mysqldump -u app_user -p"$MYSQL_PASSWORD" app_db | gzip > $backup_file
+mysqldump -u $MYSQL_USER -p"$MYSQL_PASSWORD" -h $MYSQL_HOST $MYSQL_DB | gzip > $backup_file
 
 # Загрузка бэкапа в S3
 aws s3 cp $backup_file s3://$s3_bucket/

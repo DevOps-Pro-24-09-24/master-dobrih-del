@@ -29,3 +29,11 @@ aws ec2 run-instances \
     --iam-instance-profile Name=HW5-InstanceProfile \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=APP},{Key=env,Value=test},{Key=DZ,Value=hw5},{Key=part,Value=app}]'
 ```
+## Proofs
+### Проверка
+<image src="screenshots/checking_git_clone.png" alt="checking_git_clone.png">
+<image src="screenshots/checking_systemd_status.png" alt="checking_systemd_status.png">
+
+### Бекапы
+<image src="screenshots/backup.png" alt="backup.png">
+

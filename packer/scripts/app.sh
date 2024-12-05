@@ -2,7 +2,7 @@
 export APP_DIR="/usr/apps/flask-alb-app"
 export VENV_DIR="/usr/venvs/flask-alb-app"
 sudo apt-get update && sudo apt upgrade -yq
-sudo apt install -yq python3-pip default-libmysqlclient-dev build-essential pkg-config git python3-venv
+sudo apt install -yq python3-pip cron default-libmysqlclient-dev build-essential pkg-config git python3-venv
 # sudo mkdir -p  /usr/{apps,venvs}/flask-alb-app && cd /usr/apps/flask-alb-app
 sudo mkdir -p $VENV_DIR $APP_DIR && cd $APP_DIR
 sudo python3 -m venv $VENV_DIR
