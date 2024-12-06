@@ -28,6 +28,7 @@ aws ec2 run-instances \
 ```sh
 InstanceId=$(aws ec2 describe-instances --filters "Name=tag:DZ,Values=hw4" "Name=tag:Name,Values=tect_vm" "Name=instance-state-name,Values=running" --query 'Reservations[*].Instances[*].InstanceId' --output text)
 ```
+### describe instance profile
 ```sh
 aws ec2 describe-instances --instance-ids $InstanceId --query "Reservations[*].Instances[*].IamInstanceProfile"
 ```
