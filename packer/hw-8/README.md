@@ -17,7 +17,7 @@ aws ec2 run-instances \
     --instance-type t3.micro \
     --key-name test \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=APP},{Key=env,Value=test},{Key=DZ,Value=hw8},{Key=part,Value=app}]'
-
+```
 
 ## 
 ### paker build db
