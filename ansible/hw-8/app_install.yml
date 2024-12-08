@@ -16,6 +16,7 @@
           - pkg-config
           - git
           - python3-venv
+          - python3-pymysql
         state: present
 
     - name: Create application and virtual environment directories
@@ -40,23 +41,11 @@
         requirements: /tmp/requirements.txt
         virtualenv: "{{ venv_dir }}"
         virtualenv_command: python3 -m venv
+    - name: Install Python package pymysqla
+      ansible.builtin.pip:
+        virtualenv: "{{ venv_dir }}"
+        virtualenv_command: python3 -m venv
+        name:
+          - flask_mysqldb
+          - pymysql
 
-  #   - name: Create Gunicorn service file
-  #     ansible.builtin.template:
-  #       src: files/template-systemd-unit-gunicorn-service.j2
-  #       dest: /etc/systemd/system/gunicorn.service
-  #       mode: '0644'
-  #     notify:
-  #       - Reload systemd to apply new service
-
-  #   - name: Enable and start Gunicorn service
-  #     ansible.builtin.systemd:
-  #       name: gunicorn
-  #       enabled: true
-  #       state: started
-  #       daemon_reload: true
-
-  # handlers:
-  #   - name: Reload systemd to apply new service
-  #     ansible.builtin.systemd:
-  #       daemon_reload: true
