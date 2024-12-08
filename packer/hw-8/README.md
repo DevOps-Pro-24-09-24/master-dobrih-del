@@ -21,11 +21,19 @@ aws ec2 run-instances \
 
 ## 
 ### paker build db
+
 <image src="screenshots/packer-db-done.png" alt="packer-db-done.png">
+
 ### paker build app 
+
 <image src="screenshots/packer-app-done.png" alt="packer-app-done.png">
+
 ### Proofs
 ### ansible-palybook deploy.yml
+
 <image src="screenshots/deploy-playbook.png" alt="deploy-playbook.png">
+
 ### web
+
 <image src="screenshots/check_web.png" alt="check_web.png">
+
