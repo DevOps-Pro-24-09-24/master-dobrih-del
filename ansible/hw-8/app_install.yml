@@ -1,0 +1,51 @@
+---
+- name: Install Flask ALB App on Debian
+  hosts: app_group
+  become: true
+
+  tasks:
+    - name: Install required packages
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+        name:
+          - python3-pip
+          - cron
+          - default-libmysqlclient-dev
+          - build-essential
+          - pkg-config
+          - git
+          - python3-venv
+          - python3-pymysql
+        state: present
+
+    - name: Create application and virtual environment directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+      loop:
+        - "{{ app_dir }}"
+        - "{{ venv_dir }}"
+
+    - name: Download requirements.txt
+      ansible.builtin.get_url:
+        url: "{{ requirements_url }}"
+        dest: /tmp/requirements.txt
+        mode: '0644'
+
+    - name: Install Python packages from requirements.txt
+      ansible.builtin.pip:
+        requirements: /tmp/requirements.txt
+        virtualenv: "{{ venv_dir }}"
+        virtualenv_command: python3 -m venv
+    - name: Install Python package pymysqla
+      ansible.builtin.pip:
+        virtualenv: "{{ venv_dir }}"
+        virtualenv_command: python3 -m venv
+        name:
+          - flask_mysqldb
+          - pymysql
+

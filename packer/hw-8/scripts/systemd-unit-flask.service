@@ -1,0 +1,19 @@
+[Unit]
+Description=Gunicorn instance to serve application
+After=network.target
+
+[Service]
+[Service]
+User=root
+Group=root
+WorkingDirectory=$APP_DIR
+ExecStartPre=/usr/local/bin/fetch-ssm-params.sh
+EnvironmentFile=/etc/myapp.env
+ExecStart=$VENV_DIR/bin/gunicorn --bind 0.0.0.0:8080 appy:app
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
