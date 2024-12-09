@@ -1,11 +1,17 @@
 ---
-- name: Update yum cache and install mariadb-server
+- name: Add MariaDB Repository for {{ ansible_distribution }}
+  template:
+    src: mariadb-server.repo.j2
+    dest: /etc/yum.repos.d/mariadb-server.repo
+
+- name: Install mariadb-server and other required packages
   ansible.builtin.yum:
     name:     
-    - mariadb-server
+    - MariaDB-common
+    - MariaDB-server
     - python3-PyMySQL
+    - policycoreutils-python-utils
     state: present
-
 
 - name: Ensure MariaDB service is running
   ansible.builtin.systemd:

@@ -1,5 +1,5 @@
 
-- include_tasks: install-on-rhel.yamlyml
+- include_tasks: install-on-rhel.yaml
   when: ansible_os_family == 'RedHat'
 
 - include_tasks: install-on-debian.yaml

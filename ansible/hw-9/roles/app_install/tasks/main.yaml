@@ -6,3 +6,4 @@
   when: ansible_os_family == 'Debian'
 
 - include_tasks: app-install.yaml
+  tags: db_host_ip

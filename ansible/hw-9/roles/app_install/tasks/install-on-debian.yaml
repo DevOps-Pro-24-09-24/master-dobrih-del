@@ -9,4 +9,5 @@
       - python3-venv
       - python3-pip
       - git
+      - default-libmysqlclient-dev
       - pkg-config
