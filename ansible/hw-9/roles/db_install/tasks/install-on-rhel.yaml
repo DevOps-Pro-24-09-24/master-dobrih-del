@@ -1,0 +1,38 @@
+---
+- name: Update yum cache and install mariadb-server
+  ansible.builtin.yum:
+    name:     
+    - mariadb-server
+    - python3-PyMySQL
+    state: present
+
+
+- name: Ensure MariaDB service is running
+  ansible.builtin.systemd:
+    name: mariadb
+    state: started
+    enabled: true
+
+- name: Allow remote connections to MariaDB
+  ansible.builtin.lineinfile:
+    path: /etc/my.cnf.d/server.cnf
+    regexp: '^bind-address'
+    line: 'bind-address = 0.0.0.0'
+    state: present
+  notify:
+    - Restart_MariaDB
+
+- name: Create database
+  community.mysql.mysql_db:
+    name: "{{ mysql_db }}"
+    login_unix_socket: /var/lib/mysql/mysql.sock
+
+- name: Create user with remote access to database {{ mysql_db }}
+  community.mysql.mysql_user:
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_pass }}"
+    priv: "{{ mysql_db }}.*:ALL"
+    host: '%'
+    state: present
+    login_unix_socket: /var/lib/mysql/mysql.sock
+
