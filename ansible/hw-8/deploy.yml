@@ -1,0 +1,67 @@
+---
+- name: Get IP address of the database host
+  hosts: db_group
+  gather_facts: true
+  tasks:
+    - name: Set database host IP address
+      ansible.builtin.set_fact:
+        db_host_ip: "{{ ansible_default_ipv4.address }}"
+    - name: Print the IP address of the database host
+      ansible.builtin.debug:
+        msg: "The IP address of the database host is {{ db_host_ip }}"
+
+- name: Deploy Flask ALB App on Debian
+  hosts: app_group
+  become: true
+  vars:
+    db_host_ip: "{{ hostvars[groups['db_group'][0]].db_host_ip }}"
+
+  tasks:
+    - name: Print the IP address of the database host
+      ansible.builtin.debug:
+        msg: "The IP address of the database host is {{ db_host_ip }}"
+
+    - block:
+      - name: Clone Flask ALB App repo from github
+        ansible.builtin.git:
+          repo: "{{ repo_url }}"
+          dest: /tmp/cloned-repo
+          version: "HEAD"
+          force: true
+      - name: Copy Flask ALB App files to the app directory
+        ansible.builtin.copy:
+          src: /tmp/cloned-repo/flask-alb-app/
+          dest: "{{ app_dir }}"
+          remote_src: true    
+      - name: Remove cloned repo
+        file: 
+          path: /tmp/cloned-repo
+          state: absent
+
+    - name: Create environment script
+      ansible.builtin.template:
+        src: files/template-app-env.j2
+        dest: /etc/myapp.env
+        mode: '0744'
+      notify:
+        - Reload systemd to apply new service
+
+    - name: Create Gunicorn service file
+      ansible.builtin.template:
+        src: files/template-systemd-unit-gunicorn-service.j2
+        dest: /etc/systemd/system/gunicorn.service
+        mode: '0644'
+      notify:
+        - Reload systemd to apply new service
+
+    - name: Enable and start Gunicorn service
+      ansible.builtin.systemd:
+        name: gunicorn
+        enabled: true
+        state: started
+        daemon_reload: true
+
+  handlers:
+    - name: Reload systemd to apply new service
+      ansible.builtin.systemd:
+        daemon_reload: true
