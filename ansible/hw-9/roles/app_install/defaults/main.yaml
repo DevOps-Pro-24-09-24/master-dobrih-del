@@ -1,0 +1,6 @@
+app_dir: "/usr/apps/flask-alb-app"
+virtual_env_dir: "/usr/venvs/flask-alb-app"
+venv_dir: "/usr/venvs/flask-alb-app"
+requirements_url: "https://raw.githubusercontent.com/saaverdo/flask-alb-app/refs/heads/orm/requirements.txt"
+repo_url: "https://github.com/DevOps-Pro-24-09-24/examples.git"
+db_host_ip: "127.0.0.1"

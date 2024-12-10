@@ -1,0 +1,10 @@
+---
+- hosts: db_group
+  become: true
+  roles:
+    - db_install
+
+- hosts: app_group
+  become: true
+  roles:
+    - app_install

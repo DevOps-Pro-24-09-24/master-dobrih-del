@@ -1,0 +1,5 @@
+[mariadb]
+name = MariaDB
+baseurl = "http://yum.mariadb.org/10.5/{{ ansible_distribution|lower|regex_replace('redhat', 'rhel')|regex_replace('oraclelinux', 'centos') }}{{ ansible_distribution_major_version }}-amd64"
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1

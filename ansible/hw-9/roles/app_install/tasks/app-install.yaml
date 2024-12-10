@@ -1,0 +1,81 @@
+---
+- name: Set database host IP address on {{ inventory_hostname }}
+  ansible.builtin.set_fact:
+    db_host_ip: "{{ hostvars[groups['db_group'][0]].ansible_default_ipv4.address }}"
+  delegate_to: "{{ groups['db_group'][0] }}"
+  tags: db_host_ip
+
+# - name: Set database host IP address on {{ inventory_hostname }}
+#   ansible.builtin.set_fact:
+#     db_host_ip: "{{ ansible_default_ipv4.address }}"
+#   delegate_to: "{{ groups['db_group'][0] }}"
+#   tags: db_host_ip
+    
+- name: Print the IP address of the database host
+  ansible.builtin.debug:
+    msg: "The IP address of the database host is {{ db_host_ip }}"
+  tags: db_host_ip
+
+- name: Create application and virtual environment directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  loop:
+    - "{{ app_dir }}"
+    - "{{ venv_dir }}"
+
+- block:
+    - name: Clone Flask ALB App repo from github
+      ansible.builtin.git:
+        repo: "{{ repo_url }}"
+        dest: /tmp/cloned-repo
+        version: "HEAD"
+        force: true
+
+    - name: Copy Flask ALB App files to the app directory
+      ansible.builtin.copy:
+        src: /tmp/cloned-repo/flask-alb-app/
+        dest: "{{ app_dir }}"
+        remote_src: true    
+
+    - name: Remove cloned repo
+      ansible.builtin.file: 
+        path: /tmp/cloned-repo
+        state: absent
+
+- block:
+    - name: Install Python packages from requirements.txt
+      ansible.builtin.pip:
+        requirements: "{{ app_dir }}/requirements.txt"
+        virtualenv: "{{ venv_dir }}"
+        virtualenv_command: python3 -m venv
+
+    - name: Install Python packages
+      ansible.builtin.pip:
+        virtualenv: "{{ venv_dir }}"
+        virtualenv_command: python3 -m venv
+        name:
+          - flask_mysqldb
+          - pymysql
+
+- name: Create environment script
+  ansible.builtin.template:
+    src: files/template-app-env.j2
+    dest: /etc/myapp.env
+    mode: '0744'
+
+- name: Create Gunicorn service file
+  ansible.builtin.template:
+    src: files/template-systemd-unit-gunicorn-service.j2
+    dest: /etc/systemd/system/gunicorn.service
+    mode: '0644'
+
+- name: Enable and start Gunicorn service
+  ansible.builtin.systemd:
+    name: gunicorn
+    enabled: true
+    state: started
+    daemon_reload: true
