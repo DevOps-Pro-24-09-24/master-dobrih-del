@@ -6,9 +6,9 @@
 
 - name: Install mariadb-server and other required packages
   ansible.builtin.yum:
-    name:     
-    - MariaDB-common
-    - MariaDB-server
+    name:
+    - mariadb-common 
+    - mariadb-server
     - python3-PyMySQL
     - policycoreutils-python-utils
     state: present
@@ -21,7 +21,7 @@
 
 - name: Allow remote connections to MariaDB
   ansible.builtin.lineinfile:
-    path: /etc/my.cnf.d/server.cnf
+    path: /etc/my.cnf.d/mariadb-server.cnf
     regexp: '^bind-address'
     line: 'bind-address = 0.0.0.0'
     state: present
