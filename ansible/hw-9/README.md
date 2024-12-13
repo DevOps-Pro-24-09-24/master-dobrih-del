@@ -67,4 +67,4 @@ ansible-playbook flask-alb-pb.yaml
 
 ### Web
 <image src="screenshots/08-web-fedora1.png" alt="08.web-fedora1.png">
-<image src="screenshots/09-web-fedora2.png" alt="09.web-fedora2.png">
+<image src="screenshots/09-web-fedora2.png.png" alt="09-web-fedora2.png.png">
