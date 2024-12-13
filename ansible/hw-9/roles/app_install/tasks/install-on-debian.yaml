@@ -1,0 +1,13 @@
+---
+  - name: Update apt cache and install requirements packages on Debian
+    ansible.builtin.apt:
+      update_cache: true
+      cache_valid_time: 3600
+      state: present
+      name:
+      - python3
+      - python3-venv
+      - python3-pip
+      - git
+      - default-libmysqlclient-dev
+      - pkg-config

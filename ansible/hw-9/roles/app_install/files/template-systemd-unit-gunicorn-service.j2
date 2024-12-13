@@ -1,0 +1,17 @@
+[Unit]
+Description=Gunicorn instance to serve application
+After=network.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory={{ app_dir }}
+EnvironmentFile=/etc/myapp.env
+ExecStart={{ venv_dir }}/bin/gunicorn --bind 0.0.0.0:8080 app:app
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+---
+- name: Install packages on RedHat-based systems
+  include_tasks: install-on-rhel.yaml
+  when: ansible_os_family == 'RedHat'
+
+- name: Install packages on Debian-based systems
+  include_tasks: install-on-debian.yaml
+  when: ansible_os_family == 'Debian'
+
+- name: other part of the app install
+  include_tasks: app-install.yaml
+  tags: db_host_ip

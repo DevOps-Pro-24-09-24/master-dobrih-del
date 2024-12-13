@@ -1,0 +1,14 @@
+---
+- name: Install requirements packages on RHEL
+  ansible.builtin.yum:
+    state: present
+    name: 
+    - git
+    - python3
+    - python3-virtualenv
+    - python3-pip
+    - pkgconf-pkg-config
+    - python3-pkgconfig
+    - mariadb-devel  # Add this line to install MariaDB development libraries
+    - gcc            # Add this line to install GCC compiler
+    - python3-devel  # Add this line to install Python development libraries    
