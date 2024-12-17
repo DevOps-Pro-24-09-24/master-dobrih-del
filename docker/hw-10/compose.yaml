@@ -1,0 +1,42 @@
+volumes:
+  database_data:
+
+services:
+  api:
+    build:
+      context: .
+    container_name: flask-alb-app
+    command: gunicorn -b 0.0.0.0 app:app
+    env_file:
+      - .env
+    environment:
+      MYSQL_USER: "${MYSQL_USER:-admin}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD:-pass}"
+      MYSQL_DB: "${MYSQL_DB:-flask_alb}"
+      MYSQL_HOST: "${MYSQL_HOST:-database}"
+    ports:
+      - '8000:8000'
+    restart: always
+    depends_on:
+      database:
+        condition: service_healthy
+
+  database:
+    image: mariadb:latest
+    container_name: flask-alb-db
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-root-pass}"
+      MYSQL_DATABASE: "${MYSQL_DB:-flask_alb}"
+      MYSQL_USER: "${MYSQL_USER:-admin}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD:-pass}"
+    ports:
+      - '3306:3306'
+    volumes:
+      - database_data:/var/lib/mysql
+    healthcheck:
+        test: mariadbcheck -h 127.0.0.1 -u "${MYSQL_USER:-admin}" --password="${MYSQL_PASSWORD:-pass}" "${MYSQL_DB:-flask_alb}"
+        interval: 5s
+        timeout: 2s
+        retries: 3
