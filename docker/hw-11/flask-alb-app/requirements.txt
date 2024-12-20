@@ -1,0 +1,6 @@
+flask
+flask-bootstrap
+flask-moment
+flask-mysqldb 
+gunicorn
+pymysql
