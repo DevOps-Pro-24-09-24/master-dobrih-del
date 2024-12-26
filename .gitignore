@@ -18,3 +18,4 @@ crash.log
 **terraform.plan
 **tfplan
 **lock.hcl
+.DS_Store
