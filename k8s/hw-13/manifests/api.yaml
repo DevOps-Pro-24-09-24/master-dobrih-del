@@ -28,11 +28,11 @@ spec:
                 secretKeyRef:
                   name: mysql-secret
                   key: MYSQL_PASSWORD
-            - name: MYSQL_DB
+            - name: MYSQL_DATABASE
               valueFrom:
                 secretKeyRef:
                   name: mysql-secret
-                  key: MYSQL_DB
+                  key: MYSQL_DATABASE
             - name: MYSQL_HOST
               value: "database"
           ports:
