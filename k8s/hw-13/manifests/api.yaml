@@ -28,7 +28,7 @@ spec:
                 secretKeyRef:
                   name: mysql-secret
                   key: MYSQL_PASSWORD
-            - name: MYSQL_DATABASE
+            - name: MYSQL_DB
               valueFrom:
                 secretKeyRef:
                   name: mysql-secret
