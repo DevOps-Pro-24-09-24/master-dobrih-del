@@ -60,6 +60,10 @@ spec:
               command: ["mariadbcheck", "-h", "127.0.0.1", "-u", "admin", "--password=pass", "flask_alb"]
             initialDelaySeconds: 30
             periodSeconds: 10
+      volumes:
+        - name: database-storage
+          persistentVolumeClaim:
+            claimName: database-storage            
 ---
 apiVersion: v1
 kind: Service
