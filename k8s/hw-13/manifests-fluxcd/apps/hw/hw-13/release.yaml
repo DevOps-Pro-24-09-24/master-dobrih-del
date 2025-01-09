@@ -1,0 +1,14 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: hw-13-kustomization
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  path: "./k8s/hw-13/manifests"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: github-master-dobrih-del-hw13
+    namespace: study-hw13
+  wait: true

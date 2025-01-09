@@ -1,0 +1,17 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: github-master-dobrih-del-hw13
+  namespace: study-hw13
+spec:
+  interval: 1m0s
+  ref:
+    branch: hw-13
+  timeout: 1m0s
+  url: https://github.com/DevOps-Pro-24-09-24/master-dobrih-del
+  ignore: |
+    # exclude all
+    /*
+    # include singular charts directory
+    !k8s/hw-13/manifests/  
