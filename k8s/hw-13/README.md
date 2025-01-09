@@ -3,9 +3,6 @@
 ### манифесты ДЗ в папке manifests. 
 ### fluxcd в папке manifests-fluxcd, по причине "несекюрно", там только то, что касается этого ДЗ
 
-
-
-### Screenshot of pipeline and Jenkins nodes:
 <details>
   <summary>Screenshots</summary>
 ### Screen kubectl:
