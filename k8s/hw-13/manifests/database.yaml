@@ -1,0 +1,80 @@
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: database-storage
+#   namespace: study-hw13
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 1Gi
+---      
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+  namespace: study-hw13
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+        - name: database
+          image: mariadb:latest
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_DATABASE
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_PASSWORD
+          ports:
+            - containerPort: 3306
+          # volumeMounts:
+          #   - name: database-storage
+          #     mountPath: /var/lib/mysql
+          livenessProbe:
+            exec:
+              command: ["mariadbcheck", "-h", "127.0.0.1", "-u", "admin", "--password=pass", "flask_alb"]
+            initialDelaySeconds: 30
+            periodSeconds: 10
+      # volumes:
+      #   - name: database-storage
+      #     persistentVolumeClaim:
+      #       claimName: database-storage            
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database
+  namespace: study-hw13
+spec:
+  selector:
+    app: database
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+  type: ClusterIP
